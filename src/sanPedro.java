@@ -5,21 +5,26 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 import crypto.Cryptographer;
+import gui.Ventana;
 
 public class sanPedro {
     public static void main(String[] args) {
         long startTime;
         long endTime;
         long elapsed;
+
         Scanner teclado = new Scanner(System.in);
         String password;
         String mode;
         boolean encrypt = false;
-        byte[] text;
         String fileName;
         File sourceFile;
         File targetFile;
+        byte[] text;
 
+        Ventana ventanaDeAplicacion = new Ventana();
+        ventanaDeAplicacion.setVisible(true);
+        
         // Request password
         System.out.print("Password: ");
         password = teclado.nextLine();

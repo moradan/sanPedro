@@ -1,8 +1,5 @@
 {
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Program Files\\Java\\jcurses\\lib\\jcurses.jar"
-    ]
+    "java.project.referencedLibraries": ["lib/**/*.jar"]
 }
