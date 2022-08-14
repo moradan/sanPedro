@@ -22,19 +22,17 @@ public class Cryptographer {
     final private int MATERIALS_LENGTH = SALT_LENGTH + IV_LENGTH;
     
     // Fields
-    private boolean encrypt;
+    public boolean encrypt;
+    public byte[] text;    
+    public String password;
+    
     private byte[] salt;
     private SecretKey key;
     private IvParameterSpec iv;
-    private byte[] text;
     private byte[] encodedMaterials = new byte[MATERIALS_LENGTH];
     private byte[] output;
-
-    // Constructor
-    public Cryptographer(String password, byte[] text, boolean encrypt) {
-        this.encrypt = encrypt;
-        this.text = text;
-
+    
+    public void initialize() {
         if (this.encrypt) {
             this.salt = generateSalt();
             this.iv = generateIv();

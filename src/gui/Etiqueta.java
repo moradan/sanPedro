@@ -9,4 +9,8 @@ public class Etiqueta extends JLabel {
         this.setText(text);
         this.setForeground(Color.white);
     }
+
+    public Etiqueta() {
+        this.setForeground(Color.white);
+    }
 }
