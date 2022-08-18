@@ -15,6 +15,9 @@ public class Ventana extends JFrame {
     public JButton botonDecifrar;
     public JButton botonSalir;
 
+    public JTextField campoArchivoOrigen;
+    public JTextField campoArchivoDestino;
+    
     public JPasswordField passwordField = new JPasswordField();
 
     /**

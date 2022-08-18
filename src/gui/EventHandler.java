@@ -11,14 +11,19 @@ import crypto.Cryptographer;
 
 public class EventHandler implements ActionListener {
 
+    public enum Status {
+        INICILIZADO,
+        FINALIZADO
+    }
+    
     private Ventana ventana;
     private Cryptographer cryptographer;
     private File archivoOrigen;
     private File archivoDestino;
+    private Status status = Status.FINALIZADO;
 
-    public EventHandler (Ventana ventana, Cryptographer cryptographer) {
+    public EventHandler (Ventana ventana) {
         this.ventana = ventana;
-        this.cryptographer = cryptographer;
         this.ventana.botonSalir.addActionListener(this);
         this.ventana.botonArchivoOrigen.addActionListener(this);
         this.ventana.botonArchivoDestino.addActionListener(this);
@@ -26,10 +31,19 @@ public class EventHandler implements ActionListener {
         this.ventana.botonDecifrar.addActionListener(this);
     }
 
+    public void reiniciar (Cryptographer cryptographer) {
+        this.cryptographer = cryptographer;
+
+        this.archivoOrigen = null;
+        this.archivoDestino = null;
+
+        this.status = Status.INICILIZADO;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == ventana.botonSalir) {
-            System.exit(0);
+            salir();
         }
 
         if (e.getSource() == ventana.botonArchivoOrigen) {
@@ -61,22 +75,41 @@ public class EventHandler implements ActionListener {
     }
 
     private void executeCipher() {
-        char[] password = ventana.passwordField.getPassword();
-        cryptographer.password = password.toString();
+        String password = new String(ventana.passwordField.getPassword());
+        this.cryptographer.password = password;
 
-        if (cryptographer.password.length() == 0) {
+        if (password.length() == 0) {
             System.out.println("Password issue");
-        } else if (cryptographer.text.length == 0) {
+        } else if (cryptographer.text == null) {
             System.out.println("Plain text not loaded");
-        } else {
+        } else if (archivoDestino != null) {
             System.out.println("Inicializando cifrado");
             cryptographer.initialize();
             System.out.println("Procesando cifrado");
             cryptographer.processCipher();
+
             try {
                 Files.write(archivoDestino.toPath(), cryptographer.getOutput(), StandardOpenOption.CREATE);
                 System.out.println("Archivo generado");
             } catch (Exception exception) {}
-        }
-    }    
+            
+            this.initialize();
+        } else System.out.println("No se eligio un archivo de destino");
+    } 
+
+    public Status getStatus() {
+        return this.status;
+    }
+
+    public void initialize() {
+        this.cryptographer = new Cryptographer();
+        this.archivoOrigen = null;
+        this.archivoDestino = null;
+
+        this.ventana.passwordField.setText("");
+    }
+
+    private void salir() {
+        System.exit(0);
+    }
 }
