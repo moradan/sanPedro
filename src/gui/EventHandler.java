@@ -24,13 +24,14 @@ public class EventHandler implements ActionListener {
 
     public EventHandler (Ventana ventana) {
         this.ventana = ventana;
-        this.ventana.botonSalir.addActionListener(this);
-        this.ventana.botonArchivoOrigen.addActionListener(this);
-        this.ventana.botonArchivoDestino.addActionListener(this);
-        this.ventana.botonCifrar.addActionListener(this);
-        this.ventana.botonDecifrar.addActionListener(this);
+        this.ventana.panelComandos.botonSalir.addActionListener(this);
+        this.ventana.panelArchivoOrigen.botonExplorar.addActionListener(this);
+        this.ventana.panelArchivoDestino.botonExplorar.addActionListener(this);
+        this.ventana.panelComandos.botonCifrar.addActionListener(this);
+        this.ventana.panelComandos.botonDescifrar.addActionListener(this);
     }
 
+    /* 
     public void reiniciar (Cryptographer cryptographer) {
         this.cryptographer = cryptographer;
 
@@ -38,43 +39,53 @@ public class EventHandler implements ActionListener {
         this.archivoDestino = null;
 
         this.status = Status.INICILIZADO;
-    }
+    } */
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == ventana.botonSalir) {
+        
+        if (e.getSource() == ventana.panelComandos.botonSalir) {
             salir();
         }
 
-        if (e.getSource() == ventana.botonArchivoOrigen) {
+        
+        if (e.getSource() == ventana.panelArchivoOrigen.botonExplorar) {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.showOpenDialog(null);
             
+
             this.archivoOrigen = fileChooser.getSelectedFile();
+            ventana.panelArchivoOrigen.nombreArchivo.setText(this.archivoOrigen.toPath().toString());
             try {
                 cryptographer.text = Files.readAllBytes(this.archivoOrigen.toPath());
             } catch (Exception exception) {}
-        }
+        } 
 
-        if (e.getSource() == ventana.botonArchivoDestino) {
+        
+        if (e.getSource() == ventana.panelArchivoDestino.botonExplorar) {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.showSaveDialog(null);
 
             this.archivoDestino = fileChooser.getSelectedFile();
-        }
+            ventana.panelArchivoDestino.nombreArchivo.setText(this.archivoDestino.toPath().toString());
+        } 
 
-        if (e.getSource() == ventana.botonCifrar) {
+        if (e.getSource() == ventana.panelComandos.botonCifrar) {
             cryptographer.encrypt = true;
             executeCipher();
-        }
+        } 
 
-        if (e.getSource() == ventana.botonDecifrar) {
+        if (e.getSource() == ventana.panelComandos.botonDescifrar) {
             cryptographer.encrypt = false;
             executeCipher();
         }
     }
 
     private void executeCipher() {
+        System.out.println(cryptographer.encrypt);
+        //Call password modal pop-up
+        
+        /*
         String password = new String(ventana.passwordField.getPassword());
         this.cryptographer.password = password;
 
@@ -94,19 +105,22 @@ public class EventHandler implements ActionListener {
             } catch (Exception exception) {}
             
             this.initialize();
-        } else System.out.println("No se eligio un archivo de destino");
+        } else System.out.println("No se eligio un archivo de destino"); */
+        this.initialize();
     } 
 
+    /*
     public Status getStatus() {
         return this.status;
-    }
+    } */
 
     public void initialize() {
         this.cryptographer = new Cryptographer();
         this.archivoOrigen = null;
         this.archivoDestino = null;
 
-        this.ventana.passwordField.setText("");
+        ventana.panelArchivoOrigen.nombreArchivo.setText("");
+        ventana.panelArchivoDestino.nombreArchivo.setText("");
     }
 
     private void salir() {
