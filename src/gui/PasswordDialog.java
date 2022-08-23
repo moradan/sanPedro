@@ -22,13 +22,12 @@ public class PasswordDialog extends JDialog {
 
     public PasswordDialog (Frame owner, String title, boolean modality) {
         super(owner, title, modality);
-        setupWindow();
         setupComponents();
         addComponents();
         setupLayout();
     }
 
-    private void setupWindow() {
+    public void setupWindow() {
         int x = this.getOwner().getLocation().x + 30;
         int y = this.getOwner().getLocation().y + 60;
         
@@ -40,7 +39,7 @@ public class PasswordDialog extends JDialog {
         this.etiquetaCabecera = new JLabel("Password");
         this.passwordField = new JPasswordField();
         this.botonAceptar = new JButton("Aceptar");
-        this.botonCancelar = new JButton("Cancelar");
+        this.botonCancelar = new JButton("Cancelar");        
     }
 
     private void addComponents() {
