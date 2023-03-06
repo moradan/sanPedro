@@ -23,7 +23,7 @@ public class Ventana extends JFrame {
     private Container area = this.getContentPane();
         
     //Components
-    private ImageIcon app_icon = new ImageIcon("keyicon.png");
+    private ImageIcon app_icon = new ImageIcon("./images/keyicon.png");
     private JLabel eti_cabecera = new JLabel("...te entregare las llaves del reino de los cielos...");
     public PanelArchivo panelArchivoOrigen = new PanelArchivo("Archivo Origen");
     public PanelArchivo panelArchivoDestino = new PanelArchivo("Archivo Destino");
@@ -37,7 +37,6 @@ public class Ventana extends JFrame {
     }
 
     private void setupWindow() {
-        //this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setLocation(WINDOW_LOCATION);
         this.setSize(WINDOW_SIZE);
