@@ -5,7 +5,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.border.Border;
 import javax.swing.JLabel;
-import javax.swing.JButton;
 import javax.swing.SpringLayout;
 
 import java.awt.*;
